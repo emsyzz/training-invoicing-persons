@@ -4,21 +4,54 @@ namespace Invoicing;
 
 $address = new Address(Address::ADDRESS_TYPE_ACTUAL);
 $address
-    ->setCountry('Latvia')
-    ->setRegion('Rigas pilseta')
-    ->setCity('Riga')
-    ->setAddress('Kuršu iela 25-30')
-    ->setZipCode('LV-1006');
+    ->setCountry('Latvija')
+    ->setRegion('Rīgas pilsēta')
+    ->setCity('Rīga')
+    ->setAddress('Brībības iela 65-12')
+    ->setZipCode('LV-1010');
+
+$declaredAddress = new Address(Address::ADDRESS_TYPE_DECLARED);
+$declaredAddress
+    ->setCountry('Latvija')
+    ->setRegion('Mārupes novads')
+    ->setCity('Mārupe')
+    ->setAddress('Biezā iela 34')
+    ->setZipCode('LV-3102');
+
 
 $requisites = new BankRequisites();
+$requisites
+    ->setBankName('Swedbank')
+    ->setBankSwift('LV34HABA')
+    ->setAccountNumber('HA43BA058943958403459');
 
 $person = new NaturalPerson();
 $person
     ->setBankRequisites($requisites)
-    ->setAddress('actual', $address)
-    ->setName('Emils')
-    ->setSurname('Jansons')
-    ->setPersonCode('311294-11567')
-    ->setPhoneNumber('+371 26648480');
+    ->setActualAddress($address)
+    ->setDeclaredAddress($declaredAddress)
+    ->setName('Janis')
+    ->setSurname('Zariņš')
+    ->setPersonCode('121292-11684')
+    ->setPhoneNumber('+371 28441512')
+    ->setEmail('janis.zarins@email.com');
 
-var_dump($person);
+$legalAddress = new Address(Address::ADDRESS_TYPE_LEGAL);
+$legalAddress
+    ->setCountry('Latvija')
+    ->setRegion('Rīgas pilsēta')
+    ->setCity('Rīga')
+    ->setAddress('Kr.Valdemāra iela 169')
+    ->setZipCode('LV-1010');
+
+$legalPerson = new LegalPerson();
+$legalPerson
+    ->setName('SIA "Zari"')
+    ->setRegistrationNumber('854923493749524')
+    ->setVatRegistrationNumber('LV854923493749524')
+    ->setContactPerson($person)
+    ->setEmail('info@zari.lv')
+    ->setPhoneNumber('+371 65845224')
+    ->setLegalAddress($legalAddress);
+
+var_dump($legalPerson);

@@ -9,19 +9,23 @@ namespace Invoicing;
 interface PersonInterface
 {
     /**
-     * @return string
+     * @return null|string
      */
     function getName();
 
     /**
-     * @param string $type
      * @return null|Address
      */
-    function getAddress($type);
+    function getActualAddress();
 
     /**
-     * @return string
+     * @return null|string
      */
     function getPhoneNumber();
+
+    /**
+     * @return null|string
+     */
+    function getEmail();
 
 }

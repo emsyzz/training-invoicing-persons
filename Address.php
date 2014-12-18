@@ -76,7 +76,7 @@ class Address implements AddressInterface
             self::ADDRESS_TYPE_MAILING
         )))
         {
-            throw new AddressException;
+            throw new AddressException('Unsupported address type "'. $type .'"');
         }
 
         $this->type = $type;

@@ -14,8 +14,15 @@ class NaturalPerson extends Person
      */
     protected $surname;
 
+    /**
+     * @var null|string
+     */
     protected $personCode;
 
+    /**
+     * @var null|Address
+     */
+    protected $declaredAddress;
 
     /**
      * @return null|string
@@ -36,14 +43,46 @@ class NaturalPerson extends Person
         return $this;
     }
 
+    /**
+     * @return null|string
+     */
     public function getPersonCode()
     {
         return $this->personCode;
     }
 
+    /**
+     * @param string $code
+     * @return $this
+     */
     public function setPersonCode($code)
     {
         $this->personCode = $code;
+
+        return $this;
+    }
+
+    /**
+     * @return Address|null
+     */
+    public function getDeclaredAddress()
+    {
+        return $this->declaredAddress;
+    }
+
+    /**
+     * @param Address $address
+     * @return $this
+     * @throws AddressException
+     */
+    public function setDeclaredAddress(Address $address)
+    {
+        if(Address::ADDRESS_TYPE_DECLARED !== $address->getType())
+        {
+            throw new AddressException('Invalid address type "'. $address->getType() .'". Expected "'. Address::ADDRESS_TYPE_DECLARED .'".');
+        }
+
+        $this->declaredAddress = $address;
 
         return $this;
     }

@@ -15,9 +15,9 @@ abstract class Person implements PersonInterface
     protected $name;
 
     /**
-     * @var null|Address[]
+     * @var null|Address
      */
-    protected $addresses;
+    protected $actualAddress;
 
     /**
      * @var null|string
@@ -25,9 +25,15 @@ abstract class Person implements PersonInterface
     protected $phoneNumber;
 
     /**
+     * @var null|string
+     */
+    protected $email;
+
+    /**
      * @var null|BankRequisites
      */
     protected $bankRequisites;
+
 
     /**
      * @return null|string
@@ -49,32 +55,26 @@ abstract class Person implements PersonInterface
     }
 
     /**
-     * @param string $type
      * @return Address|null
      */
-    public function getAddress($type)
+    public function getActualAddress()
     {
-        if(is_array($this->addresses) && isset($this->addresses[$type]) && $this->addresses[$type] instanceof Address)
-        {
-            return $this->addresses[$type];
-        }
-
-        return null;
+        return $this->actualAddress;
     }
 
     /**
-     * @param string $idf
      * @param Address $address
      * @return $this
+     * @throws AddressException
      */
-    public function setAddress($idf, Address $address)
+    public function setActualAddress(Address $address)
     {
-        if(!is_array($this->addresses))
+        if(Address::ADDRESS_TYPE_ACTUAL !== $address->getType())
         {
-            $this->addresses = array();
+            throw new AddressException('Invalid address type "'. $address->getType() .'". Expected "'. Address::ADDRESS_TYPE_ACTUAL .'".');
         }
 
-        $this->addresses[$idf] = $address;
+        $this->actualAddress = $address;
 
         return $this;
     }
@@ -94,6 +94,25 @@ abstract class Person implements PersonInterface
     public function setPhoneNumber($phoneNumber)
     {
         $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     * @return $this
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
 
         return $this;
     }
